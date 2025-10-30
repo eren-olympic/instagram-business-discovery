@@ -4,13 +4,13 @@ This tool uses the Instagram Business Discovery API to fetch public information 
 
 ## Features
 - Fetch basic account info (username, bio, followers, etc.).
-- Retrieve all posts with pagination handling.
-- Save data to JSON files.
+- Retrieve posts with configurable limits per request and total (handles pagination).
+- Save data to JSON files in a dedicated `results/` folder with date-time stamped filenames.
 - Print summary of account and recent posts.
 - Configurable via environment variables.
 
 ## Requirements
-- Python 3.8+
+- Python 3.12+
 - A Facebook/Instagram Access Token with necessary permissions.
 - Your own Instagram Business Account ID.
 
@@ -18,7 +18,7 @@ This tool uses the Instagram Business Discovery API to fetch public information 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-org/instagram-business-discovery.git
+   git clone https://github.com/eren-olympic/instagram-business-discovery.git
    cd instagram-business-discovery
    ```
 
@@ -54,16 +54,20 @@ poetry run instagram-discovery --help
 ```
 
 Commands:
-- `summary`: Print account summary.
-- `fetch`: Fetch and save full data to JSON.
-- `all-posts`: Fetch and save all posts with pagination.
+- `summary`: Print account summary (with optional limits).
+  ```
+  poetry run instagram-discovery summary --media-limit 50 --max-posts 100
+  ```
+- `fetch`: Fetch and save full data to JSON (first page only, with limit).
+  ```
+  poetry run instagram-discovery fetch --media-limit 25 --output base_filename  # Output: results/base_filename_YYYYMMDD_HHMMSS.json
+  ```
+- `all-posts`: Fetch and save all posts with pagination (with optional total limit).
+  ```
+  poetry run instagram-discovery all-posts --media-limit 50 --max-posts 200 --output base_filename
+  ```
 
-Example:
-```
-poetry run instagram-discovery summary
-poetry run instagram-discovery fetch --output account_data.json
-poetry run instagram-discovery all-posts --output all_posts.json
-```
+Outputs are saved in the `results/` folder with timestamps to avoid overwriting (e.g., `results/target_username_data_20251030_120000.json`).
 
 ## Development
 - Add dependencies: `poetry add <package>`.
