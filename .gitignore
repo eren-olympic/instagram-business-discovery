@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+poetry.lock  # Optional: commit if you want reproducible builds
+dist/
+build/
+*.egg-info/
